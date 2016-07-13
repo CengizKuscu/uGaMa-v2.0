@@ -4,4 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Sample/_Scenes/MainMenu.unity
+  - enabled: 1
+    path: Assets/Sample/_Scenes/Game_0.unity
+  - enabled: 1
+    path: Assets/ObjectPoolingSample/_Scene/ObjectPoolingScene.unity
