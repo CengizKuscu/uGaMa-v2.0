@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using uGaMa.Binder;
-using uGaMa.Manager;
-using UnityEngine;
+using uGaMa.Bind;
 
 namespace uGaMa.Model
 {
-    public class ModelBinder : Binder.Binder
+    public class ModelBinder : Binder
     {
         Dictionary<object, IModel> models;
 

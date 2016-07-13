@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace uGaMa.Binder
+namespace uGaMa.Bind
 {
     public interface IBinding
     {

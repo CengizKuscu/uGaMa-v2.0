@@ -5,7 +5,7 @@ using uGaMa.Command;
 using uGaMa.Manager;
 using UnityEngine;
 
-namespace uGaMa.Mediator
+namespace uGaMa.Mediate
 {
     public class Mediator : MonoBehaviour, IMediator
     {

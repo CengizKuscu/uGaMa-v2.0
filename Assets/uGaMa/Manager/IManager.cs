@@ -1,4 +1,4 @@
-﻿using uGaMa.Mediator;
+﻿using uGaMa.Mediate;
 using uGaMa.Model;
 
 namespace uGaMa.Manager

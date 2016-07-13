@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace uGaMa.Binder
+namespace uGaMa.Bind
 {
     public class Binding : IBinding
     {

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using uGaMa.Binder;
+using uGaMa.Bind;
 using uGaMa.Manager;
 using UnityEngine;
 
-namespace uGaMa.Mediator
+namespace uGaMa.Mediate
 {
     public class View : MonoBehaviour, IView
     {

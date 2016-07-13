@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace uGaMa.Binder
+namespace uGaMa.Bind
 {
     public class Binder : IBinder
     {

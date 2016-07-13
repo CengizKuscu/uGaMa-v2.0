@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using uGaMa.Mediator;
+using uGaMa.Mediate;
 using uGaMa.Command;
 
 namespace Sample

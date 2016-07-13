@@ -1,4 +1,4 @@
-﻿using uGaMa.Mediator;
+﻿using uGaMa.Mediate;
 using UnityEngine;
 using UnityEngine.UI;
 

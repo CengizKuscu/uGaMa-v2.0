@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using uGaMa.Binder;
-using UnityEngine;
+using uGaMa.Bind;
 
 namespace uGaMa.Command
 {
-    public class CommandBinder : Binder.Binder
+    public class CommandBinder : Binder
     {
         public CommandBinder() : base()
         {

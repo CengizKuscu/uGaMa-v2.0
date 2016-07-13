@@ -1,4 +1,4 @@
-﻿namespace uGaMa.Binder
+﻿namespace uGaMa.Bind
 {
     public interface IBinder
     {

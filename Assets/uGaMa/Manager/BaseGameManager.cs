@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using uGaMa.Command;
 using uGaMa.Context;
-using uGaMa.Mediator;
+using uGaMa.Mediate;
 using uGaMa.Model;
 using uGaMa.Utils;
 using UnityEngine;

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using uGaMa.Binder;
+using uGaMa.Bind;
 using UnityEngine;
 
-namespace uGaMa.Mediator
+namespace uGaMa.Mediate
 {
-    public class MediatorBinder : Binder.Binder
+    public class MediatorBinder : Binder
     {
         Dictionary<object, Dictionary<object, IMediator>> _mediators;
 

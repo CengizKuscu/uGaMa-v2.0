@@ -1,7 +1,7 @@
 ﻿using System;
 using uGaMa.Command;
 
-namespace uGaMa.Mediator
+namespace uGaMa.Mediate
 {
     public interface IMediator
     {

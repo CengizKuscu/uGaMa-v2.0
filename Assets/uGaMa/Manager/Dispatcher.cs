@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using uGaMa.Command;
-using uGaMa.Mediator;
+using uGaMa.Mediate;
 
 namespace uGaMa.Manager
 {
@@ -53,7 +53,7 @@ namespace uGaMa.Manager
 
                 foreach (KeyValuePair<object, IMediator> item in mediated)
                 {
-                    Mediator.Mediator mediate = item.Value as Mediator.Mediator;
+                    Mediator mediate = item.Value as Mediator;
                     mediate.OnHandlerNotify(notify);
                 }
             }

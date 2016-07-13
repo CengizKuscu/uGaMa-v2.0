@@ -1,4 +1,4 @@
-﻿namespace uGaMa.Mediator
+﻿namespace uGaMa.Mediate
 {
     public interface IView
     {

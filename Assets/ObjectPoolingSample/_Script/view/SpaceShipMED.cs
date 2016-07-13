@@ -1,6 +1,6 @@
 using UnityEngine;
 using uGaMa.Extensions.Pooling;
-using uGaMa.Mediator;
+using uGaMa.Mediate;
 
 namespace ObjectPoolingSample
 {

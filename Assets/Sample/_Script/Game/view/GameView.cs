@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using uGaMa.Mediator;
+using uGaMa.Mediate;
 
 namespace Sample
 {

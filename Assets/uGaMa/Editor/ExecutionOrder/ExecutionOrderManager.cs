@@ -1,6 +1,6 @@
 ﻿using System;
-using UnityEditor;
 using uGaMa.Manager;
+using UnityEditor;
 
 namespace uGaMa.Editor
 {

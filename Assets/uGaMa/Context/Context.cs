@@ -1,7 +1,6 @@
-﻿using System;
-using uGaMa.Command;
+﻿using uGaMa.Command;
 using uGaMa.Manager;
-using uGaMa.Mediator;
+using uGaMa.Mediate;
 using uGaMa.Model;
 using UnityEngine;
 

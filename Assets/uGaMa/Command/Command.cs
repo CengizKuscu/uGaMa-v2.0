@@ -1,5 +1,4 @@
 ﻿using uGaMa.Manager;
-using UnityEngine;
 
 namespace uGaMa.Command
 {
