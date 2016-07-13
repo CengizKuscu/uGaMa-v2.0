@@ -1,0 +1,17 @@
+Temp/
+v14/
+Library/
+*.suo
+.vs
+/Library
+Assets/AssetStoreTools.meta
+Assets/AssetStoreTools/Editor.meta
+Assets/AssetStoreTools/Editor/AssetStoreTools.dll.meta
+Assets/AssetStoreTools/Editor/AssetStoreToolsExtra.dll.meta
+Assets/AssetStoreTools/Editor/DroidSansMono.ttf
+Assets/AssetStoreTools/Editor/DroidSansMono.ttf.meta
+Assets/AssetStoreTools/Editor/icon.png
+Assets/AssetStoreTools/Editor/icon.png.meta
+uGaMa-v2.0.CSharp.Editor.csproj
+uGaMa-v2.0.CSharp.csproj
+uGaMa-v2.0.sln
