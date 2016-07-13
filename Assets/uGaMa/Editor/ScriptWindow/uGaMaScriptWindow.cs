@@ -40,7 +40,7 @@ namespace uGaMa.Editor
                 }
                 path = EditorGUILayout.TextField("Path: ", path);
 
-                string[] options = new string[] { "Context", "Command", "Model", "View", "Mediator", "enum", "MonoBehaviour" };
+                string[] options = new string[] { "Context", "Command", "Model", "View", "Mediator", "enum", "MonoBehaviour", "C# Script" };
 
                 index = EditorGUILayout.Popup(index, options);
 
@@ -55,29 +55,29 @@ namespace uGaMa.Editor
             this.Repaint();
         }
 
-        private string GetTempScriptName()
-        {
-            switch (index)
-            {
-                case 0:
-                    return "uGaMa_Context";
-                case 1:
-                    return "uGaMa_Command";
-                case 2:
-                    return "uGaMa_Model";
-                case 3:
-                    return "uGaMa_View";
-                case 4:
-                    return "uGaMa_Mediator";
-                case 5:
-                    return "uGaMa_enum";
-                case 6:
-                    return "MonoBehaviour";
-                default:
-                    return "uGaMa_View";
+        //private string GetTempScriptName()
+        //{
+        //    switch (index)
+        //    {
+        //        case 0:
+        //            return "uGaMa_Context";
+        //        case 1:
+        //            return "uGaMa_Command";
+        //        case 2:
+        //            return "uGaMa_Model";
+        //        case 3:
+        //            return "uGaMa_View";
+        //        case 4:
+        //            return "uGaMa_Mediator";
+        //        case 5:
+        //            return "uGaMa_enum";
+        //        case 6:
+        //            return "MonoBehaviour";
+        //        default:
+        //            return "uGaMa_View";
 
-            }
-        }
+        //    }
+        //}
 
         void InstantiatePrimitive(string className, string path)
         {
@@ -109,6 +109,10 @@ namespace uGaMa.Editor
 
                 case 6:
                     CreateUGAMAScripts.CreateMonoBehaviour(className, path);
+                    break;
+
+                case 7:
+                    CreateUGAMAScripts.CreateCSharpScript(className, path);
                     break;
 
                 default:

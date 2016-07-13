@@ -58,6 +58,26 @@ namespace uGaMa.Editor
             AssetDatabase.Refresh();
         }
 
+        public static void CreateCSharpScript(string className, string path)
+        {
+            path += "/" + className + ".cs";
+
+            if (File.Exists(path) == false)
+            {
+                using (StreamWriter outfile = new StreamWriter(path))
+                {
+                    outfile.WriteLine("using System;");
+                    outfile.WriteLine("");
+                    outfile.WriteLine("public class " + className );
+                    outfile.WriteLine("{");
+                    outfile.WriteLine("");
+                    outfile.WriteLine("}");
+                }
+            }
+            AssetDatabase.Refresh();
+        }
+
+
         public static void CreateMonoBehaviour(string className, string path)
         {
             path += "/" + className + ".cs";
