@@ -19,7 +19,7 @@ Create your Context Script and add component to your context gameobject
 
 ```
 using UnityEngine;
-using ugama.context;
+using uGaMa.Context;
 
 public class MainSceneContext : Context
 {
@@ -43,7 +43,7 @@ Note : Your order value must greater than -990 and smaller than 0 ( -990 < yourO
 
 ```
 using UnityEngine;
-using ugama.context;
+using uGaMa.Context;
 
 [ScriptOrder(-900)]
 public class MainSceneContext : Context
@@ -56,7 +56,7 @@ public class MainSceneContext : Context
 Create your Model Interface
 
 ```
-using ugama.model
+using uGaMa.Model
 
 public interface IGameModel : IModel
 {
@@ -68,7 +68,7 @@ public interface IGameModel : IModel
 Create your Model
 
 ```
-using ugama.model
+using uGaMa.Model
 
 class GameModel : IGameModel
 {
