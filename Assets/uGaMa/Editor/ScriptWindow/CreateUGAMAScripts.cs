@@ -117,7 +117,7 @@ namespace uGaMa.Editor
                 using (StreamWriter outfile = new StreamWriter(path))
                 {
                     outfile.WriteLine("using UnityEngine;");
-                    outfile.WriteLine("using uGaMa.Mediator;");
+                    outfile.WriteLine("using uGaMa.Mediate;");
                     outfile.WriteLine("");
                     outfile.WriteLine("public class " + className + " : View");
                     outfile.WriteLine("{");
@@ -149,7 +149,7 @@ namespace uGaMa.Editor
                 using (StreamWriter outfile = new StreamWriter(path))
                 {
                     outfile.WriteLine("using UnityEngine;");
-                    outfile.WriteLine("using uGaMa.Mediator;");
+                    outfile.WriteLine("using uGaMa.Mediate;");
                     outfile.WriteLine("");
                     outfile.WriteLine("public class " + className + " : Mediator");
                     outfile.WriteLine("{");

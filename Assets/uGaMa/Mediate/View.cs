@@ -78,8 +78,9 @@ namespace uGaMa.Mediate
         public void OnDestroy()
         {
             mediate.RemoveAllListeners();
-            RemoveMED(mediate);
-            gameManager.UnBindMediator(this.GetType());
+
+            gameManager.mediatorMap.RemoveMED(this.GetType(), this);
+
             OnRemove();
         }
 

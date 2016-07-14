@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using uGaMa.Bind;
 using UnityEngine;
 
@@ -79,16 +80,40 @@ namespace uGaMa.Mediate
             }
 
             Dictionary<object, IMediator> mediated = _mediators[key];
-
-            foreach (KeyValuePair<object, IMediator> item in mediated)
+            if (mediated != null)
             {
-                IMediator mediate = mediated[item.Key];
-                View view = mediate.GetView() as View;
-                view.RemoveMED(mediate);
-
-            }
-            mediated.Clear();
+                foreach (KeyValuePair<object, IMediator> item in mediated)
+                {
+                    IMediator mediate = mediated[item.Key];
+                    View view = mediate.GetView() as View;
+                    view.RemoveMED(mediate);
+                }
+                mediated.Clear();
+            }            
             _mediators.Remove(key);
+        }
+
+        public void RemoveMED(object key, View view)
+        {
+            if(_mediators.ContainsKey(key) == false)
+            {
+                return;
+            }
+
+            Dictionary<object, IMediator> mediated = _mediators[key];
+
+            if(mediated.ContainsKey(view))
+            {
+                view.RemoveMED(mediated[view]);
+                mediated.Remove(view);
+                
+            }
+
+            if(mediated.Count <= 0)
+            {
+                mediated.Clear();
+                UnBind(key);
+            }
         }
 
         public override void UnBind<T>() { UnBind(typeof(T)); }

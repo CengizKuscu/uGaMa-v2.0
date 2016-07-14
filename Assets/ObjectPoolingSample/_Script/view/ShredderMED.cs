@@ -25,6 +25,7 @@ namespace ObjectPoolingSample
 
         public void OnTriggerEnter2D(Collider2D collision)
         {
+            Debug.Log("OnTriggerEnter2D");
             dispatcher.Dispatch(ObjectPoolingEvents.DESTROY_LASER, collision);
         }
     }
