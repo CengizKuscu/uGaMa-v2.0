@@ -1,7 +1,7 @@
 using UnityEngine;
 using uGaMa.Mediate;
 
-namespace ObjectPoolingSample
+namespace PoolingAndFactoryExample
 {
     public class LaserView : View
     {

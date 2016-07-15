@@ -1,7 +1,7 @@
 using uGaMa.Command;
 using UnityEngine;
 
-namespace ObjectPoolingSample
+namespace PoolingAndFactoryExample
 {
     public class DestroyLaserCMD : Command
     {

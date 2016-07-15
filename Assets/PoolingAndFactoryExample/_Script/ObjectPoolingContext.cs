@@ -1,8 +1,9 @@
 using uGaMa.Context;
+using uGaMa.Extensions.Factory;
 using uGaMa.Utils;
 using UnityEngine;
 
-namespace ObjectPoolingSample
+namespace PoolingAndFactoryExample
 {
     public class ObjectPoolingContext : Context
     {
@@ -13,10 +14,14 @@ namespace ObjectPoolingSample
             mediatorMap.Bind<LaserView>().To<LaserMED>();
             mediatorMap.Bind<ShredderView>().To<ShredderMED>();
             mediatorMap.Bind<FormationView>().To<FormationMED>();
+
+            ObjectFactory factory = uManager.GetOrAddExtension<ObjectFactory>();
+            factory.AddItemToFactory(FactoryItems.SPACESHIP);
+
             
             LaserPooler laserPooler = uManager.GetOrAddExtension<LaserPooler>();
             laserPooler.TargetParent = transform;
-            laserPooler.PooledAmount = 5;
+            laserPooler.PooledAmount = 21;
             laserPooler.PooledObject = Resources.Load("Prefabs/Laser") as GameObject;
             laserPooler.WillGrow = false;
 

@@ -2,7 +2,7 @@ using UnityEngine;
 using uGaMa.Extensions.Pooling;
 using uGaMa.Mediate;
 
-namespace ObjectPoolingSample
+namespace PoolingAndFactoryExample
 {
     public class SpaceShipMED : Mediator
     {

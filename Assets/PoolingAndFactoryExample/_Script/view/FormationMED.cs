@@ -1,11 +1,13 @@
 using UnityEngine;
 using uGaMa.Mediate;
+using uGaMa.Extensions.Factory;
 
-namespace ObjectPoolingSample
+namespace PoolingAndFactoryExample
 {
     public class FormationMED : Mediator
     {
         SpaceShipPooler spaceShipPooler;
+        ObjectFactory factory;
 
         public override void Init()
         {
@@ -16,7 +18,7 @@ namespace ObjectPoolingSample
         public override void OnRegister()
         {
             spaceShipPooler = uManager.GetOrAddExtension<SpaceShipPooler>();
-
+            factory = uManager.GetOrAddExtension<ObjectFactory>();
         }
 
         // Update is called once per frame
@@ -27,13 +29,16 @@ namespace ObjectPoolingSample
 
         public void Start()
         {
+            Vector3 offSet;
+
+            #region Object Pooling
             GameObject obj = spaceShipPooler.GetPooledObject();
             if (obj == null)
             {
                 return;
             }
             obj.SetActive(true);
-            Vector3 offSet = new Vector3(-4, 1, 0);
+            offSet = new Vector3(-4, 1, 0);
             obj.transform.position = transform.position + offSet;
             obj.transform.rotation = Quaternion.identity;
 
@@ -46,7 +51,15 @@ namespace ObjectPoolingSample
             offSet = new Vector3(4, 1, 0);
             obj.transform.position = transform.position + offSet;
             obj.transform.rotation = Quaternion.identity;
+            #endregion
 
+            #region Item Factory
+            GameObject spaceShip = factory.GetItem<GameObject>(FactoryItems.SPACESHIP);
+            offSet = new Vector3(0, 1, 0);
+            spaceShip.transform.parent = transform;
+            spaceShip.transform.position = transform.position + offSet;
+            spaceShip.transform.rotation = Quaternion.identity;
+            #endregion
         }
     }
 }

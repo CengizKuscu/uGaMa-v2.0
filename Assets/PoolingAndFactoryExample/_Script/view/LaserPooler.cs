@@ -1,7 +1,7 @@
 ﻿using uGaMa.Extensions.Pooling;
 using UnityEngine;
 
-namespace ObjectPoolingSample
+namespace PoolingAndFactoryExample
 {
     public class LaserPooler : Pooler
     {

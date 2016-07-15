@@ -1,9 +1,9 @@
 using UnityEngine;
 using uGaMa.Mediate;
 
-namespace ObjectPoolingSample
+namespace PoolingAndFactoryExample
 {
-    public class FormationView : View
+    public class SpaceShipView : View
     {
 
         // Use this for initialization

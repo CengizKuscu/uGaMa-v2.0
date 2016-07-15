@@ -1,4 +1,4 @@
-namespace ObjectPoolingSample
+namespace PoolingAndFactoryExample
 {
     public enum ObjectPoolingEvents
     {

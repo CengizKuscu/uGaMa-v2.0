@@ -1,7 +1,7 @@
 using System;
 using uGaMa.Extensions.Pooling;
 
-namespace ObjectPoolingSample
+namespace PoolingAndFactoryExample
 {
     public class SpaceShipPooler : Pooler
     {

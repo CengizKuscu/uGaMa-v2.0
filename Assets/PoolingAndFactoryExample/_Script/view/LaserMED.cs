@@ -1,11 +1,10 @@
 using UnityEngine;
 using uGaMa.Mediate;
 
-namespace ObjectPoolingSample
+namespace PoolingAndFactoryExample
 {
-    public class ShredderMED : Mediator
+    public class LaserMED : Mediator
     {
-
         public override void Init()
         {
 
@@ -21,12 +20,6 @@ namespace ObjectPoolingSample
         public override void OnRemove()
         {
 
-        }
-
-        public void OnTriggerEnter2D(Collider2D collision)
-        {
-            Debug.Log("OnTriggerEnter2D");
-            dispatcher.Dispatch(ObjectPoolingEvents.DESTROY_LASER, collision);
         }
     }
 }
