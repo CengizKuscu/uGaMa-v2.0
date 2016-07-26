@@ -5,20 +5,28 @@ namespace uGaMa.Extensions.Factory
 {
     public class ObjectFactory : MonoBehaviour
     {
-        public Dictionary<string, Object> factorItems;
+        public Dictionary<object, Object> factorItems;
 
         public ObjectFactory()
         {
-            factorItems = new Dictionary<string, Object>();
+            factorItems = new Dictionary<object, Object>();
         }
 
         public void AddItemToFactory(string path)
         {
-            if(!factorItems.ContainsKey(path))
+            if (!factorItems.ContainsKey(path))
             {
                 Object obj = Resources.Load(path);
                 factorItems.Add(path, obj);
-            }            
+            }
+        }
+
+        public void AddItemToFactory(object key, GameObject obj)
+        {
+            if (!factorItems.ContainsKey(key))
+            {
+                factorItems.Add(key, obj);
+            }
         }
 
         public void RemoveItemFromFactory(string key)
@@ -29,9 +37,9 @@ namespace uGaMa.Extensions.Factory
             }
         }
 
-        public T GetItem<T>(string key, bool autoInstantiate = true) where T : Object
+        public T GetItem<T>(object key, bool autoInstantiate = true) where T : Object
         {
-            if(factorItems.ContainsKey(key))
+            if (factorItems.ContainsKey(key))
             {
                 Object obj = factorItems[key] as Object;
                 T result;
@@ -39,7 +47,7 @@ namespace uGaMa.Extensions.Factory
                 {
                     GameObject tmp = Instantiate(obj) as GameObject;
                     result = tmp as T;
-                }              
+                }
                 else
                 {
                     result = obj as T;
@@ -47,7 +55,7 @@ namespace uGaMa.Extensions.Factory
                 return result;
             }
             Debug.LogError("<color=red><b>Factory: NOT FIND ITEM</b></color>");
-            return null;            
+            return null;
         }
     }
 }
