@@ -53,7 +53,7 @@ namespace uGaMa.Manager
                 Dictionary<Action<NotifyParam>, uGaMaBehaviour> actions = dispatchList[dispatchKey];
                 for (int i = 0; i < actions.Count; i++)
                 {
-                    if(actions.Keys.ElementAt(i) == callback && actions.Values.ElementAt(i))
+                    if(actions.Keys.ElementAt(i) == callback && actions.Values.ElementAt(i) == obj)
                     {
                         actions.Remove(actions.Keys.ElementAt(i));
                     }
