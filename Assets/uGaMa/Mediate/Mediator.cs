@@ -7,10 +7,8 @@ using UnityEngine;
 
 namespace uGaMa.Mediate
 {
-    public class Mediator : MonoBehaviour, IMediator
+    public class Mediator : uGaMaBehaviour, IMediator
     {
-        private Dictionary<object, Dictionary<Enum, Action<NotifyParam>>> listeners;
-
         private BaseGameManager _uManager;
 
         private Dispatcher _dispatcher;
@@ -25,7 +23,6 @@ namespace uGaMa.Mediate
 
         public void Awake()
         {
-            listeners = new Dictionary<object, Dictionary<Enum, Action<NotifyParam>>>();
             Init();
         }
 
@@ -46,55 +43,19 @@ namespace uGaMa.Mediate
             _view = view;
         }
 
-        public void AddListener(Enum value, Action<NotifyParam> callback)
+        public void AddListener(object dispatchKey, Action<NotifyParam> callback)
         {
-            object enumObj = Enum.ToObject(value.GetType(), value);
-
-            if (!listeners.ContainsKey(enumObj))
-            {
-                Dictionary<Enum, Action<NotifyParam>> tmp = new Dictionary<Enum, Action<NotifyParam>>();
-
-                tmp.Add(value, callback);
-
-                listeners[enumObj] = tmp;
-            }
-            else
-            {
-                Dictionary<Enum, Action<NotifyParam>> tmp = listeners[enumObj];
-                tmp.Add(value, callback);
-            }
+            dispatcher.AddListener(this, dispatchKey, callback);
         }
 
-        public void RemoveListener(Enum value, Action<NotifyParam> callback)
+        public void RemoveListener(object dispatchKey, Action<NotifyParam> callback)
         {
-            object enumObj = Enum.ToObject(value.GetType(), value);
-            if (listeners.ContainsKey(enumObj))
-            {
-                Dictionary<Enum, Action<NotifyParam>> tmp = listeners[enumObj];
-                tmp.Remove(value);
-                listeners.Remove(enumObj);
-            }
+            dispatcher.RemoveListener(this, dispatchKey, callback);
         }
 
         public void RemoveAllListeners()
         {
-            listeners.Clear();
+            dispatcher.RemoveAllListeners(this);
         }
-
-        internal void OnHandlerNotify(NotifyParam param)
-        {
-            object enumObj = param.key;
-
-            if (listeners.ContainsKey(enumObj))
-            {
-                Dictionary<Enum, Action<NotifyParam>> tmp = listeners[enumObj];
-
-                for (int i = 0; i < tmp.Count; i++)
-                {
-                    Action<NotifyParam> callback = tmp.Values.ElementAt(i);
-                    callback(param);
-                }
-            }
-        }        
     }
 }

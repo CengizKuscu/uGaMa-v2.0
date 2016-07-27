@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using uGaMa.Command;
 using uGaMa.Mediate;
 
@@ -6,6 +8,13 @@ namespace uGaMa.Manager
 {
     public class Dispatcher
     {
+        public Dictionary<object, Dictionary<Action<NotifyParam>, uGaMaBehaviour>> dispatchList;
+
+        public Dispatcher()
+        {
+            dispatchList = new Dictionary<object, Dictionary<Action<NotifyParam>, uGaMaBehaviour>>();
+        }
+
         CommandBinder commandMap
         {
             get
@@ -21,40 +30,86 @@ namespace uGaMa.Manager
                 return BaseGameManager.GetInstance().mediatorMap;
             }
         }
-        
-        public void Dispatch(object key, object param, object msg)
-        {
-            NotifyParam notify = new NotifyParam(key, param, msg);
-            commandMap.ExecuteCommand(notify);
-            SendNotifyToMediators(notify);
-        }
 
-        public void Dispatch(object key, object param)
+        public void AddListener(uGaMaBehaviour obj, object dispatchKey, Action<NotifyParam> callback)
         {
-            NotifyParam notify = new NotifyParam(key, param, null);
-            commandMap.ExecuteCommand(notify);
-            SendNotifyToMediators(notify);
-        }
-
-        public void Dispatch(object key)
-        {
-            NotifyParam notify = new NotifyParam(key, null, null);
-            commandMap.ExecuteCommand(notify);
-            SendNotifyToMediators(notify);
-        }
-
-        private void SendNotifyToMediators(NotifyParam notify)
-        {
-            Dictionary<object, Dictionary<object, IMediator>> mediators = mediatorMap.mediators;
-
-            foreach (KeyValuePair<object, Dictionary<object, IMediator>> pair in mediators)
+            if(!dispatchList.ContainsKey(dispatchKey))
             {
-                Dictionary<object, IMediator> mediated = pair.Value;
+                Dictionary<Action<NotifyParam>, uGaMaBehaviour> actions = new Dictionary<Action<NotifyParam>, uGaMaBehaviour>();
+                actions.Add(callback, obj);
+                dispatchList.Add(dispatchKey, actions);
+            }
+            else
+            {
+                Dictionary<Action<NotifyParam>, uGaMaBehaviour> actions = dispatchList[dispatchKey];
+                actions.Add(callback, obj);
+            }
+        }
 
-                foreach (KeyValuePair<object, IMediator> item in mediated)
+        public void RemoveListener(uGaMaBehaviour obj, object dispatchKey, Action<NotifyParam> callback)
+        {
+            if(dispatchList.ContainsKey(dispatchKey))
+            {
+                Dictionary<Action<NotifyParam>, uGaMaBehaviour> actions = dispatchList[dispatchKey];
+                for (int i = 0; i < actions.Count; i++)
                 {
-                    Mediator mediate = item.Value as Mediator;
-                    mediate.OnHandlerNotify(notify);
+                    if(actions.Keys.ElementAt(i) == callback && actions.Values.ElementAt(i))
+                    {
+                        actions.Remove(actions.Keys.ElementAt(i));
+                    }
+                }
+            }
+        }
+
+        public void RemoveAllListeners(uGaMaBehaviour obj)
+        {
+            foreach (KeyValuePair<object, Dictionary<Action<NotifyParam>, uGaMaBehaviour>> item in dispatchList)
+            {
+                Dictionary<Action<NotifyParam>, uGaMaBehaviour> actions = item.Value;
+                if(actions.ContainsValue(obj))
+                {
+                    for (int i = 0; i < actions.Count; i++)
+                    {
+                        if(actions.Values.ElementAt(i) == obj)
+                        {
+                            actions.Remove(actions.Keys.ElementAt(i));
+                        }
+                    }
+                }
+            }
+        }
+        
+        public void Dispatch(object dispatchKey, object dispatchParam, object dispatchMsg)
+        {
+            NotifyParam notify = new NotifyParam(dispatchKey, dispatchParam, dispatchMsg);
+            commandMap.ExecuteCommand(notify);
+            SendNotifyToObject(notify);
+        }
+
+        public void Dispatch(object dispatchKey, object dispatchParam)
+        {
+            NotifyParam notify = new NotifyParam(dispatchKey, dispatchParam, null);
+            commandMap.ExecuteCommand(notify);
+            SendNotifyToObject(notify);
+        }
+
+        public void Dispatch(object dispatchKey)
+        {
+            NotifyParam notify = new NotifyParam(dispatchKey, null, null);
+            commandMap.ExecuteCommand(notify);
+            SendNotifyToObject(notify);
+        }
+
+        private void SendNotifyToObject(NotifyParam notify)
+        {
+            if(dispatchList.ContainsKey(notify.key))
+            {
+                Dictionary<Action<NotifyParam>, uGaMaBehaviour> actions = dispatchList[notify.key];
+
+                for (int i = 0; i < actions.Count; i++)
+                {
+                    uGaMaBehaviour tmpBehavior = actions.Values.ElementAt(i);
+                    tmpBehavior.OnHandlerNotify(notify, actions.Keys.ElementAt(i));
                 }
             }
         }

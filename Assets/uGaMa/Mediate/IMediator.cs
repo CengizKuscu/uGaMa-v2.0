@@ -11,9 +11,9 @@ namespace uGaMa.Mediate
 
         IView GetView();
 
-        void AddListener(Enum value, Action<NotifyParam> callback);
+        void AddListener(object dispatchKey, Action<NotifyParam> callback);
 
-        void RemoveListener(Enum value, Action<NotifyParam> callback);
+        void RemoveListener(object dispatchKey, Action<NotifyParam> callback);
 
         void RemoveAllListeners();
     }
