@@ -1,0 +1,267 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Ugama-v2.0 by CengizKuscu</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Ugama-v2.0</h1>
+        <p>C# MVC framework adapted for Unity3D projects.</p>
+
+        <p class="view"><a href="https://github.com/CengizKuscu/uGaMa-v2.0">View the Project on GitHub <small>CengizKuscu/uGaMa-v2.0</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/CengizKuscu/uGaMa-v2.0/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/CengizKuscu/uGaMa-v2.0/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/CengizKuscu/uGaMa-v2.0">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="ugama" class="anchor" href="#ugama" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>uGaMa</h1>
+
+<p>C# MVC framework adapted for Unity3D projects.</p>
+
+<h2>
+<a id="ugama-scripts-window" class="anchor" href="#ugama-scripts-window" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>"uGaMa Scripts" Window</h2>
+
+<p>Window &gt; uGaMa Scripts</p>
+
+<p><img src="http://i.imgur.com/PROoPz0.png" alt=""></p>
+
+<h2>
+<a id="context-example" class="anchor" href="#context-example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Context Example</h2>
+
+<p>Context is a GameObject and contains your GameObjects.</p>
+
+<p><img src="http://i.imgur.com/GM6cFgf.png" alt=""></p>
+
+<p>Create your Context Script and add component to your context gameobject</p>
+
+<p><img src="http://i.imgur.com/FHtAY84.png" alt=""></p>
+
+<pre><code>using UnityEngine;
+using uGaMa.Context;
+
+public class MainSceneContext : Context
+{
+    public override void Init()
+    {
+    }
+
+    public override void Bindings()
+    {
+    }
+
+    public override void UnBindings()
+    {
+    }
+}
+</code></pre>
+
+<p>If you want to specific ScriptExecutionOrder</p>
+
+<p>Note : Your order value must greater than -990 and smaller than 0 ( -990 &lt; yourOrder &lt; 0)</p>
+
+<pre><code>using UnityEngine;
+using uGaMa.Context;
+
+[ScriptOrder(-900)]
+public class MainSceneContext : Context
+{
+}
+</code></pre>
+
+<h2>
+<a id="model-example" class="anchor" href="#model-example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Model Example</h2>
+
+<p>Create your Model Interface</p>
+
+<pre><code>using uGaMa.Model
+
+public interface IGameModel : IModel
+{
+    // your model variable
+    int scoreValue { get; set; }
+}
+</code></pre>
+
+<p>Create your Model</p>
+
+<pre><code>using uGaMa.Model
+
+class GameModel : IGameModel
+{
+    private int _scoreValue = 0;
+
+    public int scoreValue
+    {
+        get { return _scoreValue; }
+        set { _scoreValue = value; }
+    }
+}
+</code></pre>
+
+<p>Bind your model in your Context</p>
+
+<pre><code>public class MainSceneContext : Context
+{
+    public override void Bindings()
+    {
+        modelMap.Bind&lt;IGameModel&gt;().To&lt;GameModel&gt;();
+    }
+}
+</code></pre>
+
+<p>Get your model from commands or mediators</p>
+
+<pre><code>
+GameModel gameModel = uManager.GetModel&lt;IGameModel&gt;() as GameModel;
+
+</code></pre>
+
+<h2>
+<a id="command-example" class="anchor" href="#command-example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Command Example</h2>
+
+<p>Create your command key</p>
+
+<pre><code>public enum GameEvents
+{
+    UPDATE_SCORE
+    //Other keys
+}
+</code></pre>
+
+<p>Execute your command in other commands or mediators</p>
+
+<pre><code>// single Command
+dispatcher.Dispatch(GameEvents.UPDATE_SCORE);
+
+// use param
+dispatcher.Dispatch(GameEvents.UPDATE_SCORE, yourData);
+
+//use message
+dispatcher.Dispatch(GameEvents.UPDATE_SCORE, yourData, yourMessage);
+</code></pre>
+
+<p>Bind your commands in your Context</p>
+
+<pre><code>public class MainSceneContext : Context
+{
+    public override void Bindings()
+    {
+        commandMap.Bind(GameEvents.UPDATE_SCORE).To&lt;UpdateScoreCMD&gt;();
+    }
+}
+</code></pre>
+
+<p>If you want to Chain Commands</p>
+
+<pre><code>public class MainSceneContext : Context
+{
+    public override void Bindings()
+    {
+        commandMap.Bind(GameEvents.YOUR_KEY).To&lt;CMD1&gt;().To&lt;CMD2&gt;();
+    }
+}
+</code></pre>
+
+<p>Create your Command</p>
+
+<pre><code>public class UpdateScoreCMD : Command
+{
+    public override void Execute(NotifyParam notify)
+    {
+        YourData yourData = notify.data as YourData;
+        YourMessage yourMessage = notify.msg as YourMessage;
+    }
+}
+</code></pre>
+
+<h2>
+<a id="mediator-example" class="anchor" href="#mediator-example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Mediator Example</h2>
+
+<p>Create your View Script and add to a GameObject in hierarchy.</p>
+
+<pre><code>public class YourView : View
+{
+
+}
+</code></pre>
+
+<p>Create a Mediator Script </p>
+
+<pre><code>
+public class YourViewMED : Mediator
+{
+    public override void OnRegister()
+    {
+    }
+
+    public override void OnRemove()
+    {
+    }   
+}
+</code></pre>
+
+<p>Bind your mediators in your Context</p>
+
+<pre><code>public class MainSceneContext : Context
+{
+    public override void Bindings()
+    {
+        mediatorMap.Bind&lt;YourView&gt;().To&lt;YourViewMED&gt;();
+    }
+}
+</code></pre>
+
+<p>Get Mediator</p>
+
+<pre><code>
+YourViewMED mediator = uManager.GetMediator&lt;YourView&gt;() as YourViewMED;
+
+</code></pre>
+
+<p>Handle any of the commands in the mediators.</p>
+
+<pre><code>public class YourViewMED : Mediator
+{
+    public override void OnRegister()
+    {
+        AddListener(GameEvents.UPDATE_SCORE, UpdateScore);
+    }
+
+    private void UpdateScore(NotifyParam param)
+    {
+
+    }   
+}
+</code></pre>
+
+<p>Remove handle</p>
+
+<pre><code>
+RemoveListener(GameEvents.UPDATE_SCORE, UpdateScore);
+
+</code></pre>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/CengizKuscu">CengizKuscu</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
