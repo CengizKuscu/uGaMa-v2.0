@@ -196,6 +196,25 @@ namespace uGaMa.Editor
             AssetDatabase.Refresh();
         }
 
+        public static void CreateInterface(string className, string path)
+        {
+            path += "/" + className + ".cs";
+
+            if (File.Exists(path) == false)
+            {
+                using (StreamWriter outfile = new StreamWriter(path))
+                {
+                    outfile.WriteLine("using uGaMa.Model;");
+                    outfile.WriteLine("");
+                    outfile.WriteLine("public interface " + className);
+                    outfile.WriteLine("{");
+                    outfile.WriteLine("");
+                    outfile.WriteLine("}");
+                }
+            }
+            AssetDatabase.Refresh();
+        }
+
 
         public static void CreateModel(string className, string path)
         {
