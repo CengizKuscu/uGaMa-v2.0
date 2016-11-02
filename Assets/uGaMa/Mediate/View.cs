@@ -8,7 +8,6 @@ namespace uGaMa.Mediate
 {
     public class View : MonoBehaviour, IView
     {
-
         private Mediator mediate;
 
         private BaseGameManager gameManager;
