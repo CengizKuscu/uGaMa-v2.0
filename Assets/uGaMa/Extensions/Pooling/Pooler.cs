@@ -89,6 +89,8 @@ namespace uGaMa.Extensions.Pooling
             {
                 Destroy(pooledObjects[i]);
             }
+
+            pooledObjects.Clear();
         }
     }
 }

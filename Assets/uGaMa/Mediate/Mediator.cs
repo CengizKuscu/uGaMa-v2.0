@@ -57,5 +57,10 @@ namespace uGaMa.Mediate
         {
             dispatcher.RemoveAllListeners(this);
         }
+
+        public void OnDestroy()
+        {
+            OnRemove();
+        }
     }
 }
