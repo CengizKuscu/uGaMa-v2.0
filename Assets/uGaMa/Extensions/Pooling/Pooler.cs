@@ -50,7 +50,7 @@ namespace uGaMa.Extensions.Pooling
                     GameObject obj = (GameObject)Instantiate(pooledObject);
                     if (targetParent)
                     {
-                        obj.transform.parent = targetParent;
+                        obj.transform.SetParent(targetParent);
                     }
                     obj.SetActive(false);
 
@@ -74,7 +74,7 @@ namespace uGaMa.Extensions.Pooling
                 GameObject obj = (GameObject)Instantiate(pooledObject);
                 if (targetParent)
                 {
-                    obj.transform.parent = targetParent;
+                    obj.transform.SetParent(targetParent);
                 }
                 pooledObjects.Add(obj);
                 return obj;
