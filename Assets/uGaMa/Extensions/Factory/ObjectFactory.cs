@@ -31,7 +31,7 @@ namespace uGaMa.Extensions.Factory
 
         public void RemoveItemFromFactory(string key)
         {
-            if (!factorItems.ContainsKey(key))
+            if (factorItems.ContainsKey(key))
             {
                 factorItems.Remove(key);
             }
