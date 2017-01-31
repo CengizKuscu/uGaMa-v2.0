@@ -12,6 +12,8 @@ namespace Sample
 
         MyGameModel gameModel;
 
+
+
         public override void OnRegister()
         {
             base.OnRegister();
@@ -33,20 +35,20 @@ namespace Sample
         private IEnumerator StartTurn()
         {
             yield return new WaitForSeconds(3);
-            dispatcher.Dispatch(GameEvents.HIDE_TURN_MESSAGE);
+            Dispatcher.Dispatch(GameEvents.HIDE_TURN_MESSAGE);
             if (gameModel.Life > 0)
             {
-                dispatcher.Dispatch(GameEvents.CREATE_TOUCH_ORDER);
+                Dispatcher.Dispatch(GameEvents.CREATE_TOUCH_ORDER);
             }
             else
             {
-                dispatcher.Dispatch(MainMenuEvents.LOAD_MAIN_MENU);
+                Dispatcher.Dispatch(MainMenuEvents.LOAD_MAIN_MENU);
             }
         }
 
         private void HideTurnMessage(NotifyParam obj)
         {
-            dispatcher.Dispatch(GameEvents.UPDATE_LIFE);
+            Dispatcher.Dispatch(GameEvents.UPDATE_LIFE);
 
             Debug.Log("HIDE TURN MESSAGE " + gameModel.Life);
         }
@@ -68,23 +70,23 @@ namespace Sample
                 {
 
                     yield return new WaitForSeconds(0.5f);
-                    dispatcher.Dispatch(GameEvents.HIDE_TOUCH, gameModel.TouchOrder[i - 1]);
+                    Dispatcher.Dispatch(GameEvents.HIDE_TOUCH, gameModel.TouchOrder[i - 1]);
                 }
 
                 yield return new WaitForSeconds(1);
-                dispatcher.Dispatch(GameEvents.SHOW_TOUCH, val);
+                Dispatcher.Dispatch(GameEvents.SHOW_TOUCH, val);
             }
 
             yield return new WaitForSeconds(1);
-            dispatcher.Dispatch(GameEvents.HIDE_TOUCH, gameModel.TouchOrder[gameModel.TouchOrder.Count - 1]);
+            Dispatcher.Dispatch(GameEvents.HIDE_TOUCH, gameModel.TouchOrder[gameModel.TouchOrder.Count - 1]);
             AddListener(GameEvents.TOUCH, TouchHandler);
-            dispatcher.Dispatch(GameEvents.ITEM_ACTIVE);
+            Dispatcher.Dispatch(GameEvents.ITEM_ACTIVE);
             yield break;
         }
 
         public void Start()
         {
-            dispatcher.Dispatch(GameEvents.CREATE_TOUCH_ORDER);
+            Dispatcher.Dispatch(GameEvents.CREATE_TOUCH_ORDER);
         }
 
         private void CheckTouchOrder(NotifyParam obj)
@@ -116,19 +118,19 @@ namespace Sample
                 turnMessageParam.message = "SORRY!!!";
             }
 
-            dispatcher.Dispatch(GameEvents.SHOW_TURN_MESSAGE, turnMessageParam);
+            Dispatcher.Dispatch(GameEvents.SHOW_TURN_MESSAGE, turnMessageParam);
         }
 
         private void TouchHandler(NotifyParam obj)
         {
-            int clientTouchIndex = (int)obj.data;
+            int clientTouchIndex = (int)obj.Data;
             List<int> touchOrder = gameModel.TouchOrder;
             clientTouchOrder.Add(clientTouchIndex);
             Debug.Log("GAME MED CLICKED");
             if (clientTouchOrder.Count == touchOrder.Count)
             {
                 RemoveListener(GameEvents.TOUCH, TouchHandler);
-                dispatcher.Dispatch(GameEvents.CHECK_TOUCH_ORDER);
+                Dispatcher.Dispatch(GameEvents.CHECK_TOUCH_ORDER);
             }
 
             //Debug.Log("TOUCH HANDLER: " + obj.data);

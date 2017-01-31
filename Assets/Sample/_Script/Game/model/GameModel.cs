@@ -34,7 +34,7 @@ namespace Sample
             }
         }
 
-        public void init()
+        public void Init()
         {
             throw new NotImplementedException();
         }

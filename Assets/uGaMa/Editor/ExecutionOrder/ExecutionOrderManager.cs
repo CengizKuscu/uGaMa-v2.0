@@ -17,7 +17,7 @@ namespace uGaMa.Editor
                     foreach (var a in Attribute.GetCustomAttributes(monoScript.GetClass(), typeof(ScriptOrder)))
                     {
                         var currentOrder = MonoImporter.GetExecutionOrder(monoScript);
-                        var newOrder = ((ScriptOrder)a).order;
+                        var newOrder = ((ScriptOrder)a).Order;
                         if (currentOrder != newOrder)
                             MonoImporter.SetExecutionOrder(monoScript, newOrder);
                     }

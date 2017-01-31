@@ -24,13 +24,13 @@ namespace Sample
         private void QuitBtnOnClick()
         {
             Debug.Log("QuitBtnOnClick CLICK");
-            dispatcher.Dispatch(MainMenuEvents.QUIT_GAME);
+            Dispatcher.Dispatch(MainMenuEvents.QUIT_GAME);
         }
 
         public void PlayBtnOnClick()
         {
             Debug.Log("PLAY CLICK");
-            dispatcher.Dispatch(MainMenuEvents.START_GAME, "Game_0");
+            Dispatcher.Dispatch(MainMenuEvents.START_GAME, "Game_0");
         }
 
         public override void OnRemove()

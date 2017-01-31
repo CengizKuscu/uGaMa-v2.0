@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using uGaMa.Bind;
 using uGaMa.Manager;
 using UnityEngine;
 
@@ -8,9 +7,9 @@ namespace uGaMa.Mediate
 {
     public class View : MonoBehaviour, IView
     {
-        private Mediator mediate;
+        private Mediator _mediate;
 
-        private BaseGameManager gameManager;
+        private BaseGameManager _gameManager;
 
         internal void RemoveMED(object key)
         {
@@ -22,67 +21,62 @@ namespace uGaMa.Mediate
 
         public void Awake()
         {
-            mapView();
+            MapView();
         }
 
-        private void mapView()
+        private void MapView()
         {
-            gameManager = BaseGameManager.GetInstance();
-
-            Dictionary<object, object> binded;
+            _gameManager = BaseGameManager.GetInstance();
 
             object key = this.GetType();
 
-            IBinding binding = gameManager.mediatorMap.GetBind(key);
-            binded = binding.Binded;
+            var binding = _gameManager.mediatorMap.GetBind(key);
+            var binded = binding.Binded;
 
-            foreach (KeyValuePair<object, object> bindedPair in binded)
+            foreach (var bindedPair in binded)
             {
-                Type mediateType = bindedPair.Value as Type;
-                View view;
+                var mediateType = bindedPair.Value as Type;
 
-                foreach (View item in GameObject.FindObjectsOfType(key as Type))
+                foreach (var o in FindObjectsOfType((Type) key))
                 {
-                    if (item == this)
+                    var item = (View) o;
+                    if (item != this) continue;
+                    var view = item;
+
+                    view.gameObject.AddComponent(mediateType);
+
+                    _mediate = view.GetComponent(mediateType) as Mediator;
+                    if (_mediate == null) continue;
+                    _mediate.SetView(view);
+
+                    Dictionary<object, IMediator> mediated;
+                    if (!_gameManager.mediatorMap.mediators.ContainsKey(key))
                     {
-
-                        view = item;
-
-                        view.gameObject.AddComponent(mediateType);
-
-                        mediate = view.GetComponent(mediateType) as Mediator;
-                        mediate.SetView(view);
-
-                        Dictionary<object, IMediator> mediated;
-                        if (!gameManager.mediatorMap.mediators.ContainsKey(key))
-                        {
-                            mediated = new Dictionary<object, IMediator>();
-                            mediated.Add(this, mediate);
-                            gameManager.mediatorMap.mediators.Add(key, mediated);
-                        }
-                        else
-                        {
-                            mediated = gameManager.mediatorMap.mediators[key];
-                            if (!mediated.ContainsKey(this))
-                            {
-                                mediated.Add(this, mediate);
-                            }
-                        }
-                        mediate.OnRegister();
+                        mediated = new Dictionary<object, IMediator> {{this, _mediate}};
+                        _gameManager.mediatorMap.mediators.Add(key, mediated);
                     }
+                    else
+                    {
+                        mediated = _gameManager.mediatorMap.mediators[key];
+                        if (!mediated.ContainsKey(this))
+                        {
+                            mediated.Add(this, _mediate);
+                        }
+                    }
+                    _mediate.OnRegister();
                 }
             }
         }
 
         public void OnDestroy()
         {
-            mediate.RemoveAllListeners();
+            _mediate.RemoveAllListeners();
 
-            gameManager.mediatorMap.RemoveMED(this.GetType(), this);
+            _gameManager.mediatorMap.RemoveMED(this.GetType(), this);
 
             OnRemove();
         }
 
-        virtual public void OnRemove() { }
+        public virtual void OnRemove() { }
     }
 }

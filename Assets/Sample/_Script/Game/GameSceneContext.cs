@@ -14,17 +14,17 @@ namespace Sample
 
         public override void Bindings()
         {
-            commandMap.Bind(GameEvents.CREATE_TOUCH_ORDER).To<CreateTouchOrderCMD>();
+            CommandMap.Bind(GameEvents.CREATE_TOUCH_ORDER).To<CreateTouchOrderCMD>();
 
-            commandMap.Bind(MainMenuEvents.LOAD_MAIN_MENU).To<LoadMainMenuCMD>();
+            CommandMap.Bind(MainMenuEvents.LOAD_MAIN_MENU).To<LoadMainMenuCMD>();
 
-            mediatorMap.Bind<GameView>().To<GameMED>();
+            MediatorMap.Bind<GameView>().To<GameMED>();
 
-            mediatorMap.Bind<GameItem>().To<GameItemMED>();
+            MediatorMap.Bind<GameItem>().To<GameItemMED>();
 
-            mediatorMap.Bind<TurnMessageView>().To<TurnMessageMED>();
+            MediatorMap.Bind<TurnMessageView>().To<TurnMessageMED>();
 
-            modelMap.Bind<IMyGameModel>().To<MyGameModel>();
+            ModelMap.Bind<IMyGameModel>().To<MyGameModel>();
         }
 
         public override void UnBindings()

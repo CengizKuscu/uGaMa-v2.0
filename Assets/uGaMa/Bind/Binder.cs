@@ -5,16 +5,16 @@ namespace uGaMa.Bind
 {
     public class Binder : IBinder
     {
-        public Dictionary<object, IBinding> bindings;
+        public Dictionary<object, IBinding> Bindings;
 
         public delegate void BindingResolver(IBinding binding);
 
         public Binder ()
         {
-            bindings = new Dictionary<object, IBinding>();
+            Bindings = new Dictionary<object, IBinding>();
         }
 
-        virtual public IBinding Bind(object obj)
+        public virtual IBinding Bind(object obj)
         {
             IBinding binding = new Binding();
             binding.Bind(obj);
@@ -22,45 +22,45 @@ namespace uGaMa.Bind
             return binding;
         }
 
-        virtual protected void resolver(IBinding binding)
+        protected virtual void resolver(IBinding binding)
         {
-            if (bindings.ContainsKey(binding.key))
+            if (Bindings.ContainsKey(binding.Key))
             {
-                Debug.Log("key is already registered");
+                Debug.Log("Key is already registered");
             }
             else
             {
-                bindings[binding.key] = binding;
+                Bindings[binding.Key] = binding;
             }
         }
         
-        virtual public IBinding Bind<T>() { return Bind(typeof(T)); }
+        public virtual IBinding Bind<T>() { return Bind(typeof(T)); }
 
-        virtual public IBinding GetBind(object key)
+        public virtual IBinding GetBind(object key)
         {
-            if(bindings.ContainsKey(key))
+            if(Bindings.ContainsKey(key))
             {
-                return bindings[key];
+                return Bindings[key];
             }
             return null;
         }
 
-        virtual public IBinding GetBind<T>()
+        public virtual IBinding GetBind<T>()
         {
             return GetBind(typeof(T));
         }
 
-        virtual public void UnBind(object key)
+        public virtual void UnBind(object key)
         {
-            IBinding binding = GetBind(key);
+            var binding = GetBind(key);
             if (binding == null)
             {
                 return;
             }
             binding.Binded.Clear();
-            bindings.Remove(key);
+            Bindings.Remove(key);
         }
 
-        virtual public void UnBind<T>() { UnBind(typeof(T)); }
+        public virtual void UnBind<T>() { UnBind(typeof(T)); }
     }
 }

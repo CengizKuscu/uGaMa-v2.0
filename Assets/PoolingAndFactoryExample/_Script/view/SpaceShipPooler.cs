@@ -1,4 +1,3 @@
-using System;
 using uGaMa.Extensions.Pooling;
 
 namespace PoolingAndFactoryExample

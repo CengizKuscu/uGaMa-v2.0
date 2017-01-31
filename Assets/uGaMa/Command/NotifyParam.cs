@@ -2,39 +2,17 @@
 {
     public class NotifyParam
     {
-        private object _key;
-        private object _data;
-        private object _msg;
-
         public NotifyParam(object key, object data, object msg)
         {
-            _key = key;
-            _data = data;
-            _msg = msg;
+            this.Key = key;
+            this.Data = data;
+            this.Msg = msg;
         }
 
-        public object key
-        {
-            get
-            {
-                return _key;
-            }
-        }
+        public object Key { get; private set; }
 
-        public object data
-        {
-            get
-            {
-                return _data;
-            }
-        }
+        public object Data { get; private set; }
 
-        public object msg
-        {
-            get
-            {
-                return _msg;
-            }
-        }
+        public object Msg { get; private set; }
     }
 }

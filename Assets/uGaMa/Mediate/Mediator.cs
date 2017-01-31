@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using uGaMa.Command;
 using uGaMa.Manager;
-using UnityEngine;
 
 namespace uGaMa.Mediate
 {
     public class Mediator : uGaMaBehaviour, IMediator
     {
-        private BaseGameManager _uManager;
+        private readonly BaseGameManager _uManager;
 
-        private Dispatcher _dispatcher;
+        private readonly DispatchManager _dispatcher;
 
         private IView _view;
 
@@ -28,15 +25,15 @@ namespace uGaMa.Mediate
 
         public BaseGameManager uManager { get { return _uManager; } }
 
-        public Dispatcher dispatcher { get { return _dispatcher; } }
+        public DispatchManager Dispatcher { get { return _dispatcher; } }
 
         public IView GetView() { return _view; }
 
-        virtual public void Init() { }
+        public virtual void Init() { }
 
-        virtual public void OnRegister() { }
+        public virtual void OnRegister() { }
 
-        virtual public void OnRemove() { }
+        public virtual void OnRemove() { }
 
         internal void SetView(IView view)
         {
@@ -45,17 +42,17 @@ namespace uGaMa.Mediate
 
         public void AddListener(object dispatchKey, Action<NotifyParam> callback)
         {
-            dispatcher.AddListener(this, dispatchKey, callback);
+            Dispatcher.AddListener(this, dispatchKey, callback);
         }
 
         public void RemoveListener(object dispatchKey, Action<NotifyParam> callback)
         {
-            dispatcher.RemoveListener(this, dispatchKey, callback);
+            Dispatcher.RemoveListener(this, dispatchKey, callback);
         }
 
         public void RemoveAllListeners()
         {
-            dispatcher.RemoveAllListeners(this);
+            Dispatcher.RemoveAllListeners(this);
         }
 
         public void OnDestroy()

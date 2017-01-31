@@ -4,9 +4,9 @@ namespace uGaMa.Command
 {
     public class Command : ICommand
     {
-        private BaseGameManager _uManager;
+        private readonly BaseGameManager _uManager;
 
-        private Dispatcher _dispatcher;
+        private readonly DispatchManager _dispatcher;
 
         public Command()
         {
@@ -16,8 +16,8 @@ namespace uGaMa.Command
 
         public BaseGameManager uManager { get { return _uManager; } }
 
-        public Dispatcher dispatcher { get { return _dispatcher; } }
+        public DispatchManager Dispatcher { get { return _dispatcher; } }
 
-        virtual public void Execute(NotifyParam notify) { }
+        public virtual void Execute(NotifyParam notify) { }
     }
 }

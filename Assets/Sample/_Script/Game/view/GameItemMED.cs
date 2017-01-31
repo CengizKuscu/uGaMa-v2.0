@@ -36,7 +36,7 @@ namespace Sample
         private void HideTouch(NotifyParam obj)
         {
 
-            int showIndex = (int)obj.data;
+            int showIndex = (int)obj.Data;
             //Debug.Log("HideTouch: " + showIndex.ToString() + " || " + _view.itemIndex.ToString());
             if (showIndex == _view.itemIndex)
             {
@@ -46,7 +46,7 @@ namespace Sample
 
         private void ShowTouch(NotifyParam obj)
         {
-            int showIndex = (int)obj.data;
+            int showIndex = (int)obj.Data;
             //Debug.Log("HideTouch: " + showIndex.ToString() + " || " + _view.itemIndex.ToString());
             if (showIndex == _view.itemIndex)
             {
@@ -75,7 +75,7 @@ namespace Sample
         public void OnMouseDown()
         {
             Debug.Log("CLICKED");
-            dispatcher.Dispatch(GameEvents.TOUCH, _view.itemIndex);
+            Dispatcher.Dispatch(GameEvents.TOUCH, _view.itemIndex);
             LoadSprite(1);
         }
 

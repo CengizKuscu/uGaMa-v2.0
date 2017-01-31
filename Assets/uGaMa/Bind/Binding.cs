@@ -1,37 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace uGaMa.Bind
 {
     public class Binding : IBinding
     {
-        public Binder.BindingResolver resolver;
-
-        protected Dictionary<object, object> binded;
-
-        protected object _key;
+        public Binder.BindingResolver Resolver;
 
         public Binding():this(null)
         {
-            binded = new Dictionary<object, object>();
+            Binded = new Dictionary<object, object>();
         }
 
         public Binding(Binder.BindingResolver resolver)
         {
-            this.resolver = resolver;
-            binded = new Dictionary<object, object>();
+            this.Resolver = resolver;
+            Binded = new Dictionary<object, object>();
         }
 
-        public Dictionary<object, object> Binded { get { return binded; } }
+        public Dictionary<object, object> Binded { get; private set; }
 
-        public object key {
-            get { return _key; }
-            set { throw new NotImplementedException(); }
-        }
+        public object Key { get; private set; }
 
         public IBinding Bind(object obj)
         {
-            _key = obj;
+            Key = obj;
             return this;
         }
 
@@ -39,10 +31,10 @@ namespace uGaMa.Bind
 
         public IBinding To(object obj)
         {
-            binded.Add(obj, obj);
-            if(resolver != null)
+            Binded.Add(obj, obj);
+            if(Resolver != null)
             {
-                resolver(this);
+                Resolver(this);
             }
             return this;
         }

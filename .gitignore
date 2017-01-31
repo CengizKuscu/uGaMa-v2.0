@@ -15,3 +15,5 @@ Assets/AssetStoreTools/Editor/icon.png.meta
 uGaMa-v2.0.CSharp.Editor.csproj
 uGaMa-v2.0.CSharp.csproj
 uGaMa-v2.0.sln
+*.csproj
+.idea/

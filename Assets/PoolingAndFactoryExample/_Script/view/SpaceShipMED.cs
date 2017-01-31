@@ -1,6 +1,5 @@
-using UnityEngine;
-using uGaMa.Extensions.Pooling;
 using uGaMa.Mediate;
+using UnityEngine;
 
 namespace PoolingAndFactoryExample
 {

@@ -14,6 +14,6 @@ namespace uGaMa.Bind
 
         Dictionary<object, object> Binded { get; }
 
-        object key { get; set; }
+        object Key { get; }
     }
 }

@@ -2,7 +2,7 @@
 {
     public class Model : IModel
     {
-        public void init()
+        public void Init()
         {
             
         }

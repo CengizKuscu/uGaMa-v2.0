@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using uGaMa.Bind;
 using UnityEngine;
 
@@ -7,7 +7,7 @@ namespace uGaMa.Mediate
 {
     public class MediatorBinder : Binder
     {
-        Dictionary<object, Dictionary<object, IMediator>> _mediators;
+        readonly Dictionary<object, Dictionary<object, IMediator>> _mediators;
 
         public MediatorBinder():base()
         {
@@ -31,43 +31,26 @@ namespace uGaMa.Mediate
 
         protected override void resolver(IBinding binding)
         {
-            if (bindings.ContainsKey(binding.key))
+            if (Bindings.ContainsKey(binding.Key))
             {
-                Debug.Log("key is already registered");
+                Debug.Log("Key is already registered");
             }
             else
             {
-                bindings[binding.key] = binding;
+                Bindings[binding.Key] = binding;
             }
         }
 
         protected internal IMediator GetMediator<T>()
         {
-            if (mediators.ContainsKey(typeof(T)))
-            {
-                Dictionary<object, IMediator> mediated = mediators[typeof(T)];
-                foreach (KeyValuePair<object, IMediator> item in mediated)
-                {
-                    return mediated[item.Key];
-                }
-            }
-            return null;
+            if (!mediators.ContainsKey(typeof(T))) return null;
+            var mediated = mediators[typeof(T)];
+            return mediated.Select(item => mediated[item.Key]).FirstOrDefault();
         }
 
         protected internal IMediator GetMediator(IView view)
         {
-            foreach (KeyValuePair<object, Dictionary<object, IMediator>> item in mediators)
-            {
-                Dictionary<object, IMediator> tmp = mediators[item.Key];
-                foreach (KeyValuePair<object, IMediator> pair in tmp)
-                {
-                    if(pair.Key == view)
-                    {
-                        return pair.Value;
-                    }
-                }
-            }
-            return null;
+            return (from item in mediators from pair in mediators[item.Key] where pair.Key == view select pair.Value).FirstOrDefault();
         }
 
         public override void UnBind(object key)
@@ -79,14 +62,14 @@ namespace uGaMa.Mediate
                 return;
             }
 
-            Dictionary<object, IMediator> mediated = _mediators[key];
+            var mediated = _mediators[key];
             if (mediated != null)
             {
-                foreach (KeyValuePair<object, IMediator> item in mediated)
+                foreach (var item in mediated)
                 {
-                    IMediator mediate = mediated[item.Key];
-                    View view = mediate.GetView() as View;
-                    view.RemoveMED(mediate);
+                    var mediate = mediated[item.Key];
+                    var view = mediate.GetView() as View;
+                    if (view != null) view.RemoveMED(mediate);
                 }
                 mediated.Clear();
             }            
@@ -100,7 +83,7 @@ namespace uGaMa.Mediate
                 return;
             }
 
-            Dictionary<object, IMediator> mediated = _mediators[key];
+            var mediated = _mediators[key];
 
             if(mediated.ContainsKey(view))
             {
@@ -109,11 +92,9 @@ namespace uGaMa.Mediate
                 
             }
 
-            if(mediated.Count <= 0)
-            {
-                mediated.Clear();
-                UnBind(key);
-            }
+            if (mediated.Count > 0) return;
+            mediated.Clear();
+            UnBind(key);
         }
 
         public override void UnBind<T>() { UnBind(typeof(T)); }

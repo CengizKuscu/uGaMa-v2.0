@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using uGaMa.Command;
 using uGaMa.Mediate;
-using uGaMa.Command;
+using UnityEngine;
 
 namespace Sample
 {
@@ -45,7 +45,7 @@ namespace Sample
 
         private void ShowTurnMessage(NotifyParam obj)
         {
-            TurnMessageParam param = obj.data as TurnMessageParam;
+            TurnMessageParam param = obj.Data as TurnMessageParam;
             _viewComp.turnMessageTxt.text = param.message;
             _viewComp.turnMessageTxt.enabled = true;
             //_viewComp.enabled = true;
@@ -54,7 +54,7 @@ namespace Sample
 
         public void Start()
         {
-            dispatcher.Dispatch(GameEvents.UPDATE_LIFE);
+            Dispatcher.Dispatch(GameEvents.UPDATE_LIFE);
         }
 
         public override void OnRemove()

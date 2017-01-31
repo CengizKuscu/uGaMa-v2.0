@@ -21,7 +21,7 @@ namespace uGaMa.Manager
         
         private MediatorBinder _mediatorMap;
 
-        private Dispatcher _dispatcher;
+        private DispatchManager _dispatcher;
 
         public List<IContext> contextList;
 
@@ -45,10 +45,10 @@ namespace uGaMa.Manager
             _commandMap = new CommandBinder();
             _modelMap = new ModelBinder();
             _mediatorMap = new MediatorBinder();
-            _dispatcher = new Dispatcher();
+            _dispatcher = new DispatchManager();
         }
 
-        public Dispatcher dispatcher { get { return _dispatcher; } }
+        public DispatchManager dispatcher { get { return _dispatcher; } }
 
         internal CommandBinder commandMap { get { return _commandMap; } }
 

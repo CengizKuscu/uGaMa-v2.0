@@ -8,7 +8,7 @@ namespace PoolingAndFactoryExample
 
         public override void Execute(NotifyParam notify)
         {
-            Collider2D collision = notify.data as Collider2D;
+            Collider2D collision = notify.Data as Collider2D;
             
             LaserView laserView = collision.gameObject.GetComponent<LaserView>();
 

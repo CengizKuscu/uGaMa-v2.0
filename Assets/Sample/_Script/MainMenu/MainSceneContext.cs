@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using uGaMa.Context;
+﻿using uGaMa.Context;
+using UnityEngine;
 
 namespace Sample
 {
@@ -19,17 +19,17 @@ namespace Sample
 
             Debug.Log("MainSceneContext Bindings");
 
-            commandMap.Bind(MainMenuEvents.START_GAME).To<StartGameCMD>();
+            CommandMap.Bind(MainMenuEvents.START_GAME).To<StartGameCMD>();
 
-            commandMap.Bind(MainMenuEvents.QUIT_GAME).To<QuitGameCMD>();
+            CommandMap.Bind(MainMenuEvents.QUIT_GAME).To<QuitGameCMD>();
 
-            commandMap.Bind(MainMenuEvents.LOAD_MAIN_MENU).To<LoadMainMenuCMD>();
+            CommandMap.Bind(MainMenuEvents.LOAD_MAIN_MENU).To<LoadMainMenuCMD>();
 
-            commandMap.Bind(GameEvents.CREATE_TOUCH_ORDER).To<CreateTouchOrderCMD>();
+            CommandMap.Bind(GameEvents.CREATE_TOUCH_ORDER).To<CreateTouchOrderCMD>();
 
-            modelMap.Bind<IMyGameModel>().To<MyGameModel>();
+            ModelMap.Bind<IMyGameModel>().To<MyGameModel>();
 
-            mediatorMap.Bind<MainMenuView>().To<MainMenuMED>();
+            MediatorMap.Bind<MainMenuView>().To<MainMenuMED>();
         }
 
         public override void UnBindings()

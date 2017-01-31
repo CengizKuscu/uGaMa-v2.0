@@ -14,13 +14,13 @@ namespace uGaMa.Manager
     {
         private static T _instance;
 
-        private static object _lock = new object();
+        private static readonly object Lock = new object();
 
         public static T Instance
         {
             get
             {
-                if (applicationIsQuitting)
+                if (_applicationIsQuitting)
                 {
                     Debug.LogWarning("[Singleton] Instance '" + typeof(T) +
                         "' already destroyed on application quit." +
@@ -28,37 +28,35 @@ namespace uGaMa.Manager
                     return null;
                 }
 
-                lock (_lock)
+                lock (Lock)
                 {
+                    if (_instance != null) return _instance;
+                    _instance = (T)FindObjectOfType(typeof(T));
+
+                    if (FindObjectsOfType(typeof(T)).Length > 1)
+                    {
+                        Debug.LogError("[Singleton] Something went really wrong " +
+                                       " - there should never be more than 1 singleton!" +
+                                       " Reopening the scene might fix it.");
+                        return _instance;
+                    }
+
                     if (_instance == null)
                     {
-                        _instance = (T)FindObjectOfType(typeof(T));
+                        var singleton = new GameObject();
+                        _instance = singleton.AddComponent<T>();
+                        singleton.name = "(singleton) " + typeof(T).ToString();
 
-                        if (FindObjectsOfType(typeof(T)).Length > 1)
-                        {
-                            Debug.LogError("[Singleton] Something went really wrong " +
-                                " - there should never be more than 1 singleton!" +
-                                " Reopening the scene might fix it.");
-                            return _instance;
-                        }
+                        DontDestroyOnLoad(singleton);
 
-                        if (_instance == null)
-                        {
-                            GameObject singleton = new GameObject();
-                            _instance = singleton.AddComponent<T>();
-                            singleton.name = "(singleton) " + typeof(T).ToString();
-
-                            DontDestroyOnLoad(singleton);
-
-                            Debug.Log("[Singleton] An instance of " + typeof(T) +
-                                " is needed in the scene, so '" + singleton +
-                                "' was created with DontDestroyOnLoad.");
-                        }
-                        else
-                        {
-                            Debug.Log("[Singleton] Using instance already created: " +
-                                _instance.gameObject.name);
-                        }
+                        Debug.Log("[Singleton] An instance of " + typeof(T) +
+                                  " is needed in the scene, so '" + singleton +
+                                  "' was created with DontDestroyOnLoad.");
+                    }
+                    else
+                    {
+                        Debug.Log("[Singleton] Using instance already created: " +
+                                  _instance.gameObject.name);
                     }
 
                     return _instance;
@@ -66,7 +64,7 @@ namespace uGaMa.Manager
             }
         }
 
-        private static bool applicationIsQuitting = false;
+        private static bool _applicationIsQuitting = false;
         /// <summary>
         /// When Unity quits, it destroys objects in a random order.
         /// In principle, a Singleton is only destroyed when application quits.
@@ -77,7 +75,7 @@ namespace uGaMa.Manager
         /// </summary>
         public void OnDestroy()
         {
-            applicationIsQuitting = true;
+            _applicationIsQuitting = true;
         }
     }
 }

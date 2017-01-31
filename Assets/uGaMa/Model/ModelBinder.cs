@@ -6,11 +6,11 @@ namespace uGaMa.Model
 {
     public class ModelBinder : Binder
     {
-        Dictionary<object, IModel> models;
+        readonly Dictionary<object, IModel> _models;
 
         public ModelBinder():base()
         {
-            models = new Dictionary<object, IModel>();
+            _models = new Dictionary<object, IModel>();
         }
 
         public override IBinding Bind<T>() { return Bind(typeof(T)); }
@@ -24,28 +24,21 @@ namespace uGaMa.Model
 
         protected override void resolver(IBinding binding)
         {
-            if(binding.key != null)
+            if (binding.Key == null) return;
+            if (_models.ContainsKey(binding.Key) != false) return;
+            var tmp = binding.Binded;
+            foreach (var pair in tmp)
             {
-                if (models.ContainsKey(binding.key) == false)
-                {
-                    Dictionary<object, object> tmp = binding.Binded;
-                    foreach (KeyValuePair<object, object> pair in tmp)
-                    {
-                        Type obj = pair.Value as Type;
-                        IModel model = (IModel)Activator.CreateInstance(obj);
-                        models.Add(binding.key, model);
-                    }
-                }
-            }            
+                var obj = pair.Value as Type;
+                if (obj == null) continue;
+                var model = (IModel)Activator.CreateInstance(obj);
+                _models.Add(binding.Key, model);
+            }
         }
 
         protected internal IModel GetModel<T>()
         {
-            if(models.ContainsKey(typeof(T)))
-            {
-                return models[typeof(T)];
-            }
-            return null;
+            return _models.ContainsKey(typeof(T)) ? _models[typeof(T)] : null;
         }
     }
 }

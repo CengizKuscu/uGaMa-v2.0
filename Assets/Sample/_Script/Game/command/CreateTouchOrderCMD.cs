@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
 using uGaMa.Command;
-using System.Collections.Generic;
+using UnityEngine;
 
 namespace Sample
 {

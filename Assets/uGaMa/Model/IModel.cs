@@ -2,6 +2,6 @@
 {
     public interface IModel
     {
-        void init();
+        void Init();
     }
 }

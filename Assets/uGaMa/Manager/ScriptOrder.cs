@@ -6,22 +6,22 @@ namespace uGaMa.Manager
     public class ScriptOrder : Attribute
     {
         [HideInInspector]
-        public int order;
+        public int Order;
 
         [HideInInspector]
-        public static int reserveOrder = -990;
+        public static int ReserveOrder = -9999;
 
         public ScriptOrder(int order)
         {
-            this.order = order;
-            ScriptOrder.reserveOrder = this.order;
+            this.Order = order;
+            ReserveOrder = this.Order;
             //Debug.Log("+ ScriptOrder.reserveOrder: " + ScriptOrder.reserveOrder + " || " + this.order);
         }
 
         public ScriptOrder()
         {
-            ScriptOrder.reserveOrder += 10;
-            this.order = ScriptOrder.reserveOrder;
+            ReserveOrder += 1;
+            this.Order = ReserveOrder;
             //Debug.Log("ScriptOrder.reserveOrder: " + ScriptOrder.reserveOrder + " || " + this.order);
         }
     }

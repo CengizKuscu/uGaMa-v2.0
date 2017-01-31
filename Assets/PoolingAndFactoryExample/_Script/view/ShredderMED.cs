@@ -1,5 +1,5 @@
-using UnityEngine;
 using uGaMa.Mediate;
+using UnityEngine;
 
 namespace PoolingAndFactoryExample
 {
@@ -26,7 +26,7 @@ namespace PoolingAndFactoryExample
         public void OnTriggerEnter2D(Collider2D collision)
         {
             Debug.Log("OnTriggerEnter2D");
-            dispatcher.Dispatch(ObjectPoolingEvents.DESTROY_LASER, collision);
+            Dispatcher.Dispatch(ObjectPoolingEvents.DESTROY_LASER, collision);
         }
     }
 }

@@ -10,10 +10,10 @@ namespace PoolingAndFactoryExample
 
         public override void Bindings()
         {
-            mediatorMap.Bind<SpaceShipView>().To<SpaceShipMED>();
-            mediatorMap.Bind<LaserView>().To<LaserMED>();
-            mediatorMap.Bind<ShredderView>().To<ShredderMED>();
-            mediatorMap.Bind<FormationView>().To<FormationMED>();
+            MediatorMap.Bind<SpaceShipView>().To<SpaceShipMED>();
+            MediatorMap.Bind<LaserView>().To<LaserMED>();
+            MediatorMap.Bind<ShredderView>().To<ShredderMED>();
+            MediatorMap.Bind<FormationView>().To<FormationMED>();
 
             ObjectFactory factory = uManager.GetOrAddExtension<ObjectFactory>();
             factory.AddItemToFactory(FactoryItems.SPACESHIP);
@@ -31,7 +31,7 @@ namespace PoolingAndFactoryExample
             spaceShipPooler.WillGrow = false;
             spaceShipPooler.PooledObject = Resources.Load("Prefabs/SpaceShip") as GameObject;
 
-            commandMap.Bind(ObjectPoolingEvents.DESTROY_LASER).To<DestroyLaserCMD>();
+            CommandMap.Bind(ObjectPoolingEvents.DESTROY_LASER).To<DestroyLaserCMD>();
         }
 
 

@@ -9,7 +9,7 @@ namespace Sample
         {
             MyGameModel gameModel = uManager.GetModel<IMyGameModel>() as MyGameModel;
 
-            string sceneName = notify.data as string;
+            string sceneName = notify.Data as string;
 
 
 

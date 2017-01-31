@@ -1,7 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
-using System;
+﻿using System;
 using uGaMa.Command;
+using UnityEngine;
 
 public class uGaMaBehaviour : MonoBehaviour
 {
